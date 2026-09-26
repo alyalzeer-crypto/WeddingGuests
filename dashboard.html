@@ -42,19 +42,39 @@
         <!-- الإحصائيات -->
         <div class="stats">
 
-            <div class="card">
+            <div
+                class="card stat-card active-filter"
+                id="totalCard"
+            >
                 <h3>إجمالي المدعوين</h3>
                 <p id="totalGuests">0</p>
+                <span class="stat-hint">
+                    اضغط لعرض الجميع
+                </span>
             </div>
 
-            <div class="card">
+
+            <div
+                class="card stat-card"
+                id="invitedCard"
+            >
                 <h3>تمت دعوتهم</h3>
                 <p id="invitedGuests">0</p>
+                <span class="stat-hint">
+                    اضغط لعرضهم
+                </span>
             </div>
 
-            <div class="card">
+
+            <div
+                class="card stat-card"
+                id="notInvitedCard"
+            >
                 <h3>لم تتم دعوتهم</h3>
                 <p id="notInvitedGuests">0</p>
+                <span class="stat-hint">
+                    اضغط لعرضهم
+                </span>
             </div>
 
         </div>
@@ -101,13 +121,28 @@
         <!-- قائمة المدعوين -->
         <div class="guest-list">
 
-            <h2>قائمة المدعوين</h2>
+            <div class="list-title-row">
+
+                <div>
+                    <h2>قائمة المدعوين</h2>
+
+                    <p
+                        id="currentFilterText"
+                        class="current-filter-text"
+                    >
+                        عرض جميع المدعوين
+                    </p>
+                </div>
+
+            </div>
+
 
             <input
                 type="text"
                 id="searchGuest"
                 placeholder="ابحث عن مدعو..."
             >
+
 
             <div id="guestsContainer">
             </div>
@@ -117,7 +152,7 @@
     </div>
 
 
-    <!-- الرسائل المنبثقة -->
+    <!-- Toast -->
     <div
         id="toast"
         class="toast"
@@ -167,7 +202,6 @@
     </div>
 
 
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="supabase.js"></script>

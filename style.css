@@ -6,11 +6,8 @@
 
 body {
     font-family: Arial, sans-serif;
-
     background: #f4f6f9;
-
     color: #222;
-
     direction: rtl;
 }
 
@@ -21,9 +18,7 @@ body {
 
 .container {
     width: 92%;
-
     max-width: 1100px;
-
     margin: 30px auto;
 }
 
@@ -34,45 +29,31 @@ body {
 
 .top-bar {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     gap: 20px;
-
     margin-bottom: 30px;
 }
 
 .top-bar h1 {
     color: #173f66;
-
     margin-bottom: 7px;
 }
 
 #userEmail {
     color: #6b7280;
-
     font-size: 15px;
 }
 
 .logout-btn {
     width: auto;
-
     min-width: 140px;
-
     padding: 12px 18px;
-
     background: #374151;
-
     color: white;
-
     border: none;
-
     border-radius: 9px;
-
     font-weight: bold;
-
     cursor: pointer;
 }
 
@@ -91,7 +72,6 @@ h1 {
 
 h2 {
     color: #173f66;
-
     margin-bottom: 20px;
 }
 
@@ -102,24 +82,16 @@ h2 {
 
 .stats {
     display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-
     margin-bottom: 30px;
 }
 
 .card {
     background: white;
-
     padding: 22px;
-
     border-radius: 14px;
-
     text-align: center;
-
     box-shadow:
         0 4px 14px
         rgba(0, 0, 0, 0.08);
@@ -127,18 +99,52 @@ h2 {
 
 .card h3 {
     font-size: 17px;
-
     margin-bottom: 12px;
-
     color: #555;
 }
 
 .card p {
     font-size: 30px;
-
     font-weight: bold;
-
     color: #173f66;
+}
+
+
+/* ===========================
+   بطاقات الفلترة
+=========================== */
+
+.stat-card {
+    cursor: pointer;
+    position: relative;
+    border: 2px solid transparent;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        border-color 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 22px
+        rgba(0, 0, 0, 0.12);
+}
+
+.stat-card.active-filter {
+    border-color: #2577b9;
+
+    box-shadow:
+        0 8px 24px
+        rgba(37, 119, 185, 0.16);
+}
+
+.stat-hint {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #8a939f;
 }
 
 
@@ -149,16 +155,30 @@ h2 {
 .add-guest,
 .guest-list {
     background: white;
-
     padding: 25px;
-
     border-radius: 14px;
-
     margin-bottom: 25px;
-
     box-shadow:
         0 4px 14px
         rgba(0, 0, 0, 0.08);
+}
+
+
+/* ===========================
+   عنوان القائمة
+=========================== */
+
+.list-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.current-filter-text {
+    margin-top: -10px;
+    margin-bottom: 18px;
+    color: #6b7280;
+    font-size: 14px;
 }
 
 
@@ -170,22 +190,16 @@ input,
 select,
 button {
     width: 100%;
-
     padding: 13px;
-
     margin-bottom: 12px;
-
     border-radius: 9px;
-
     border: 1px solid #ccc;
-
     font-size: 16px;
 }
 
 input:focus,
 select:focus {
     outline: none;
-
     border-color: #2577b9;
 
     box-shadow:
@@ -200,15 +214,10 @@ select:focus {
 
 button {
     background: #2577b9;
-
     color: white;
-
     border: none;
-
     cursor: pointer;
-
     font-weight: bold;
-
     transition: 0.2s;
 }
 
@@ -218,7 +227,6 @@ button:hover {
 
 button:disabled {
     opacity: 0.6;
-
     cursor: not-allowed;
 }
 
@@ -229,19 +237,14 @@ button:disabled {
 
 .guest-item {
     background: #f8fafc;
-
     border: 1px solid #e2e8f0;
-
     border-radius: 12px;
-
     padding: 17px;
-
     margin-top: 14px;
 }
 
 .guest-item h3 {
     margin-bottom: 10px;
-
     color: #222;
 }
 
@@ -251,18 +254,31 @@ button:disabled {
 
 
 /* ===========================
+   من أضاف المدعو
+=========================== */
+
+.added-by {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    color: #4b5563;
+}
+
+.added-by strong {
+    color: #173f66;
+}
+
+
+/* ===========================
    الحالات
 =========================== */
 
 .status-invited {
     color: #198754;
-
     font-weight: bold;
 }
 
 .status-not-invited {
     color: #dc3545;
-
     font-weight: bold;
 }
 
@@ -273,17 +289,13 @@ button:disabled {
 
 .guest-actions {
     display: flex;
-
     gap: 10px;
-
     margin-top: 14px;
 }
 
 .guest-actions button {
     flex: 1;
-
     width: auto;
-
     margin-bottom: 0;
 }
 
@@ -318,9 +330,7 @@ button:disabled {
 
 .toast {
     position: fixed;
-
     top: 25px;
-
     left: 50%;
 
     transform:
@@ -328,19 +338,14 @@ button:disabled {
         translateY(-30px);
 
     min-width: 300px;
-
     max-width: 90%;
 
     padding: 16px 24px;
-
     border-radius: 12px;
 
     color: white;
-
     font-size: 16px;
-
     font-weight: bold;
-
     text-align: center;
 
     box-shadow:
@@ -348,7 +353,6 @@ button:disabled {
         rgba(0, 0, 0, 0.22);
 
     opacity: 0;
-
     visibility: hidden;
 
     z-index: 10000;
@@ -358,7 +362,6 @@ button:disabled {
 
 .toast.show {
     opacity: 1;
-
     visibility: visible;
 
     transform:
@@ -376,7 +379,6 @@ button:disabled {
 
 .toast.warning {
     background: #f0a500;
-
     color: #222;
 }
 
@@ -386,12 +388,11 @@ button:disabled {
 
 
 /* ===========================
-   خلفية النافذة المنبثقة
+   نافذة التعديل
 =========================== */
 
 .modal-overlay {
     position: fixed;
-
     inset: 0;
 
     background:
@@ -400,7 +401,6 @@ button:disabled {
     display: none;
 
     align-items: center;
-
     justify-content: center;
 
     padding: 20px;
@@ -412,14 +412,8 @@ button:disabled {
     display: flex;
 }
 
-
-/* ===========================
-   نافذة تعديل الاسم
-=========================== */
-
 .custom-modal {
     width: 100%;
-
     max-width: 450px;
 
     background: white;
@@ -439,29 +433,23 @@ button:disabled {
 
 .custom-modal h2 {
     text-align: center;
-
     color: #173f66;
-
     margin-bottom: 10px;
 }
 
 .custom-modal p {
     text-align: center;
-
     color: #6b7280;
-
     margin-bottom: 20px;
 }
 
 .custom-modal input {
     font-size: 17px;
-
     margin-bottom: 20px;
 }
 
 .modal-actions {
     display: flex;
-
     gap: 10px;
 }
 
@@ -514,18 +502,15 @@ button:disabled {
 
     .container {
         width: 95%;
-
         margin-top: 20px;
     }
 
     .stats {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
 
     .top-bar {
         flex-direction: column;
-
         align-items: stretch;
     }
 
@@ -544,6 +529,10 @@ button:disabled {
     .guest-actions {
         flex-direction: column;
     }
+
+    .stat-hint {
+        font-size: 13px;
+    }
 }
 
 
@@ -559,7 +548,6 @@ button:disabled {
 
     .toast {
         min-width: auto;
-
         width: 90%;
     }
 }

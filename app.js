@@ -1,3 +1,7 @@
+/* =========================================================
+   عناصر الصفحة
+========================================================= */
+
 const guestNameInput =
     document.getElementById("guestName");
 
@@ -32,13 +36,34 @@ const userEmailElement =
     document.getElementById("userEmail");
 
 
-/* Toast */
+/* =========================================================
+   بطاقات الفلترة
+========================================================= */
+
+const totalCard =
+    document.getElementById("totalCard");
+
+const invitedCard =
+    document.getElementById("invitedCard");
+
+const notInvitedCard =
+    document.getElementById("notInvitedCard");
+
+const currentFilterText =
+    document.getElementById("currentFilterText");
+
+
+/* =========================================================
+   Toast
+========================================================= */
 
 const toast =
     document.getElementById("toast");
 
 
-/* نافذة تعديل الاسم */
+/* =========================================================
+   نافذة تعديل الاسم
+========================================================= */
 
 const editNameModal =
     document.getElementById("editNameModal");
@@ -53,6 +78,10 @@ const cancelEditNameBtn =
     document.getElementById("cancelEditNameBtn");
 
 
+/* =========================================================
+   متغيرات عامة
+========================================================= */
+
 let guests = [];
 
 let currentUser = null;
@@ -63,10 +92,13 @@ let editingGuestId = null;
 
 let toastTimer = null;
 
+let currentFilter =
+    "all";
 
-/* =========================================
-   الرسائل المنبثقة
-========================================= */
+
+/* =========================================================
+   Toast
+========================================================= */
 
 function showToast(
     message,
@@ -103,9 +135,9 @@ function showToast(
 }
 
 
-/* =========================================
+/* =========================================================
    حماية الصفحة
-========================================= */
+========================================================= */
 
 async function protectPage() {
 
@@ -170,9 +202,9 @@ async function protectPage() {
 }
 
 
-/* =========================================
+/* =========================================================
    تحميل بيانات المستخدم
-========================================= */
+========================================================= */
 
 async function loadCurrentProfile() {
 
@@ -181,14 +213,18 @@ async function loadCurrentProfile() {
         error
     } =
         await supabaseClient
+
             .from("profiles")
+
             .select(
                 "username, role"
             )
+
             .eq(
                 "id",
                 currentUser.id
             )
+
             .single();
 
 
@@ -222,9 +258,9 @@ async function loadCurrentProfile() {
 }
 
 
-/* =========================================
+/* =========================================================
    تشغيل التطبيق
-========================================= */
+========================================================= */
 
 async function startApplication() {
 
@@ -244,9 +280,9 @@ async function startApplication() {
 startApplication();
 
 
-/* =========================================
+/* =========================================================
    تسجيل الخروج
-========================================= */
+========================================================= */
 
 logoutBtn.addEventListener(
     "click",
@@ -277,19 +313,24 @@ logoutBtn.addEventListener(
 );
 
 
-/* =========================================
+/* =========================================================
    تحميل المدعوين
-========================================= */
+========================================================= */
 
 async function loadGuests() {
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
+    let query =
+        supabaseClient
+
             .from("guests")
-            .select("*")
+
+            .select(`
+                *,
+                profiles (
+                    username
+                )
+            `)
+
             .order(
                 "created_at",
                 {
@@ -298,9 +339,32 @@ async function loadGuests() {
             );
 
 
+    /* العضو يرى مدعويه فقط */
+
+    if (
+        currentProfile.role !==
+        "admin"
+    ) {
+
+        query =
+            query.eq(
+                "created_by",
+                currentUser.id
+            );
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await query;
+
+
     if (error) {
 
         console.error(
+            "Load guests error:",
             error
         );
 
@@ -332,18 +396,16 @@ async function loadGuests() {
         data || [];
 
 
-    displayGuests(
-        guests
-    );
-
-
     updateStats();
+
+
+    applyGuestFilter();
 }
 
 
-/* =========================================
+/* =========================================================
    توحيد الاسم
-========================================= */
+========================================================= */
 
 function normalizeName(name) {
 
@@ -354,9 +416,9 @@ function normalizeName(name) {
 }
 
 
-/* =========================================
+/* =========================================================
    منع تكرار الاسم
-========================================= */
+========================================================= */
 
 function guestNameExists(
     name,
@@ -389,9 +451,236 @@ function guestNameExists(
 }
 
 
-/* =========================================
+/* =========================================================
+   تطبيق الفلتر الحالي
+========================================================= */
+
+function applyGuestFilter() {
+
+    const searchText =
+        normalizeName(
+            searchGuestInput.value
+        );
+
+
+    let filteredGuests =
+        guests;
+
+
+    /*
+        فلترة حسب الحالة
+    */
+
+    if (
+        currentFilter ===
+        "invited"
+    ) {
+
+        filteredGuests =
+            filteredGuests.filter(
+                function (guest) {
+
+                    return guest.status ===
+                        "invited";
+                }
+            );
+
+    } else if (
+        currentFilter ===
+        "not-invited"
+    ) {
+
+        filteredGuests =
+            filteredGuests.filter(
+                function (guest) {
+
+                    return guest.status ===
+                        "not-invited";
+                }
+            );
+    }
+
+
+    /*
+        البحث يعمل داخل الفلتر الحالي
+    */
+
+    if (searchText) {
+
+        filteredGuests =
+            filteredGuests.filter(
+                function (guest) {
+
+                    return normalizeName(
+                        guest.name
+                    ).includes(
+                        searchText
+                    );
+                }
+            );
+    }
+
+
+    displayGuests(
+        filteredGuests
+    );
+
+
+    updateActiveFilterCard();
+}
+
+
+/* =========================================================
+   تحديد البطاقة النشطة
+========================================================= */
+
+function updateActiveFilterCard() {
+
+    totalCard.classList.remove(
+        "active-filter"
+    );
+
+    invitedCard.classList.remove(
+        "active-filter"
+    );
+
+    notInvitedCard.classList.remove(
+        "active-filter"
+    );
+
+
+    if (
+        currentFilter ===
+        "all"
+    ) {
+
+        totalCard.classList.add(
+            "active-filter"
+        );
+
+
+        currentFilterText.textContent =
+            "عرض جميع المدعوين";
+
+    } else if (
+        currentFilter ===
+        "invited"
+    ) {
+
+        invitedCard.classList.add(
+            "active-filter"
+        );
+
+
+        currentFilterText.textContent =
+            "عرض من تمت دعوتهم فقط";
+
+    } else {
+
+        notInvitedCard.classList.add(
+            "active-filter"
+        );
+
+
+        currentFilterText.textContent =
+            "عرض من لم تتم دعوتهم فقط";
+    }
+}
+
+
+/* =========================================================
+   أحداث بطاقات الإحصائيات
+========================================================= */
+
+totalCard.addEventListener(
+    "click",
+    function () {
+
+        currentFilter =
+            "all";
+
+
+        applyGuestFilter();
+
+
+        showToast(
+            "تم عرض جميع المدعوين",
+            "info"
+        );
+
+
+        scrollToGuestList();
+    }
+);
+
+
+invitedCard.addEventListener(
+    "click",
+    function () {
+
+        currentFilter =
+            "invited";
+
+
+        applyGuestFilter();
+
+
+        showToast(
+            "عرض من تمت دعوتهم",
+            "success"
+        );
+
+
+        scrollToGuestList();
+    }
+);
+
+
+notInvitedCard.addEventListener(
+    "click",
+    function () {
+
+        currentFilter =
+            "not-invited";
+
+
+        applyGuestFilter();
+
+
+        showToast(
+            "عرض من لم تتم دعوتهم",
+            "info"
+        );
+
+
+        scrollToGuestList();
+    }
+);
+
+
+/* =========================================================
+   النزول إلى قائمة المدعوين
+========================================================= */
+
+function scrollToGuestList() {
+
+    document
+        .querySelector(
+            ".guest-list"
+        )
+        .scrollIntoView({
+            behavior:
+                "smooth",
+
+            block:
+                "start"
+        });
+}
+
+
+/* =========================================================
    إضافة مدعو
-========================================= */
+========================================================= */
 
 addGuestBtn.addEventListener(
     "click",
@@ -478,7 +767,9 @@ addGuestBtn.addEventListener(
             error
         } =
             await supabaseClient
+
                 .from("guests")
+
                 .insert([
                     {
                         name:
@@ -488,7 +779,10 @@ addGuestBtn.addEventListener(
                             count,
 
                         status:
-                            status
+                            status,
+
+                        created_by:
+                            currentUser.id
                     }
                 ]);
 
@@ -504,6 +798,7 @@ addGuestBtn.addEventListener(
         if (error) {
 
             console.error(
+                "Insert error:",
                 error
             );
 
@@ -546,9 +841,9 @@ addGuestBtn.addEventListener(
 );
 
 
-/* =========================================
+/* =========================================================
    عرض المدعوين
-========================================= */
+========================================================= */
 
 function displayGuests(
     list
@@ -562,14 +857,37 @@ function displayGuests(
         list.length === 0
     ) {
 
+        let emptyMessage =
+            "لا يوجد مدعوون";
+
+
+        if (
+            currentFilter ===
+            "invited"
+        ) {
+
+            emptyMessage =
+                "لا يوجد مدعوون تمت دعوتهم";
+
+        } else if (
+            currentFilter ===
+            "not-invited"
+        ) {
+
+            emptyMessage =
+                "لا يوجد مدعوون لم تتم دعوتهم";
+        }
+
+
         guestsContainer.innerHTML = `
             <p
                 style="
                     text-align:center;
-                    padding:25px;
+                    padding:30px;
+                    color:#6b7280;
                 "
             >
-                لا يوجد مدعوون
+                ${emptyMessage}
             </p>
         `;
 
@@ -605,9 +923,31 @@ function displayGuests(
                     : "status-not-invited";
 
 
+            const addedByHtml =
+                currentProfile.role ===
+                "admin"
+
+                    ? `
+                        <p class="added-by">
+                            أضافه:
+                            <strong>
+                                ${
+                                    guest.profiles
+                                        ?.username
+                                    ||
+                                    "غير معروف"
+                                }
+                            </strong>
+                        </p>
+                    `
+
+                    : "";
+
+
             const deleteButton =
                 currentProfile.role ===
                 "admin"
+
                     ? `
                         <button
                             class="delete-btn"
@@ -620,6 +960,7 @@ function displayGuests(
                             حذف
                         </button>
                     `
+
                     : "";
 
 
@@ -633,15 +974,19 @@ function displayGuests(
 
                 <p>
                     عدد الأشخاص:
+
                     <strong>
                         ${guest.guest_count}
                     </strong>
                 </p>
 
+                ${addedByHtml}
+
                 <p
                     class="${statusClass}"
                 >
                     الحالة:
+
                     ${statusText}
                 </p>
 
@@ -685,9 +1030,9 @@ function displayGuests(
 }
 
 
-/* =========================================
-   فتح نافذة تعديل الاسم
-========================================= */
+/* =========================================================
+   فتح تعديل الاسم
+========================================================= */
 
 function editGuestName(id) {
 
@@ -737,9 +1082,9 @@ function editGuestName(id) {
 }
 
 
-/* =========================================
+/* =========================================================
    إغلاق نافذة التعديل
-========================================= */
+========================================================= */
 
 function closeEditModal() {
 
@@ -757,9 +1102,9 @@ function closeEditModal() {
 }
 
 
-/* =========================================
-   زر الإلغاء
-========================================= */
+/* =========================================================
+   إلغاء
+========================================================= */
 
 cancelEditNameBtn.addEventListener(
     "click",
@@ -770,9 +1115,9 @@ cancelEditNameBtn.addEventListener(
 );
 
 
-/* =========================================
-   حفظ الاسم المعدل
-========================================= */
+/* =========================================================
+   حفظ تعديل الاسم
+========================================================= */
 
 saveGuestNameBtn.addEventListener(
     "click",
@@ -830,8 +1175,6 @@ async function saveEditedGuestName() {
             "warning"
         );
 
-        editGuestNameInput.focus();
-
         return;
     }
 
@@ -885,11 +1228,14 @@ async function saveEditedGuestName() {
         error
     } =
         await supabaseClient
+
             .from("guests")
+
             .update({
                 name:
                     newName
             })
+
             .eq(
                 "id",
                 editingGuestId
@@ -948,9 +1294,9 @@ async function saveEditedGuestName() {
 }
 
 
-/* =========================================
-   Enter لحفظ تعديل الاسم
-========================================= */
+/* =========================================================
+   Enter / Escape
+========================================================= */
 
 editGuestNameInput.addEventListener(
     "keydown",
@@ -976,9 +1322,9 @@ editGuestNameInput.addEventListener(
 );
 
 
-/* =========================================
-   الضغط خارج النافذة يغلقها
-========================================= */
+/* =========================================================
+   الضغط خارج النافذة
+========================================================= */
 
 editNameModal.addEventListener(
     "click",
@@ -995,9 +1341,9 @@ editNameModal.addEventListener(
 );
 
 
-/* =========================================
-   تغيير حالة الدعوة
-========================================= */
+/* =========================================================
+   تغيير الحالة
+========================================================= */
 
 async function toggleGuestStatus(
     id
@@ -1034,11 +1380,14 @@ async function toggleGuestStatus(
         error
     } =
         await supabaseClient
+
             .from("guests")
+
             .update({
                 status:
                     newStatus
             })
+
             .eq(
                 "id",
                 id
@@ -1085,9 +1434,9 @@ async function toggleGuestStatus(
 }
 
 
-/* =========================================
+/* =========================================================
    حذف المدعو
-========================================= */
+========================================================= */
 
 async function deleteGuest(id) {
 
@@ -1116,11 +1465,6 @@ async function deleteGuest(id) {
 
     if (!guest) {
 
-        showToast(
-            "تعذر العثور على المدعو",
-            "error"
-        );
-
         return;
     }
 
@@ -1141,8 +1485,11 @@ async function deleteGuest(id) {
         error
     } =
         await supabaseClient
+
             .from("guests")
+
             .delete()
+
             .eq(
                 "id",
                 id
@@ -1150,11 +1497,6 @@ async function deleteGuest(id) {
 
 
     if (error) {
-
-        console.error(
-            error
-        );
-
 
         showToast(
             "حدث خطأ أثناء حذف المدعو",
@@ -1175,43 +1517,22 @@ async function deleteGuest(id) {
 }
 
 
-/* =========================================
+/* =========================================================
    البحث
-========================================= */
+========================================================= */
 
 searchGuestInput.addEventListener(
     "input",
     function () {
 
-        const searchText =
-            normalizeName(
-                searchGuestInput.value
-            );
-
-
-        const filteredGuests =
-            guests.filter(
-                function (guest) {
-
-                    return normalizeName(
-                        guest.name
-                    ).includes(
-                        searchText
-                    );
-                }
-            );
-
-
-        displayGuests(
-            filteredGuests
-        );
+        applyGuestFilter();
     }
 );
 
 
-/* =========================================
+/* =========================================================
    الإحصائيات
-========================================= */
+========================================================= */
 
 function updateStats() {
 
@@ -1240,9 +1561,9 @@ function updateStats() {
 }
 
 
-/* =========================================
+/* =========================================================
    تنظيف النموذج
-========================================= */
+========================================================= */
 
 function clearForm() {
 
@@ -1262,9 +1583,9 @@ function clearForm() {
 }
 
 
-/* =========================================
-   حماية النصوص
-========================================= */
+/* =========================================================
+   حماية HTML
+========================================================= */
 
 function escapeHtml(text) {
 
@@ -1282,9 +1603,9 @@ function escapeHtml(text) {
 }
 
 
-/* =========================================
+/* =========================================================
    Enter لإضافة المدعو
-========================================= */
+========================================================= */
 
 guestNameInput.addEventListener(
     "keydown",

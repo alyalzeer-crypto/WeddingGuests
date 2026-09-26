@@ -1,0 +1,195 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    direction: rtl;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef4f9,
+            #dce9f4
+        );
+
+    color: #1f2937;
+}
+
+.login-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+
+    margin: auto;
+
+    background: white;
+
+    padding: 38px 32px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.logo {
+    width: 75px;
+    height: 75px;
+
+    margin: auto;
+    margin-bottom: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 38px;
+
+    border-radius: 50%;
+
+    background: #edf5fb;
+}
+
+h1 {
+    text-align: center;
+
+    color: #173f66;
+
+    margin-bottom: 10px;
+
+    font-size: 28px;
+}
+
+.subtitle {
+    text-align: center;
+
+    color: #6b7280;
+
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: bold;
+
+    color: #374151;
+}
+
+input {
+    width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+}
+
+input:focus {
+    outline: none;
+
+    border-color: #2577b9;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 119, 185, 0.12);
+}
+
+button {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 6px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #2577b9;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #1d6096;
+}
+
+button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+.message {
+    display: none;
+
+    margin-bottom: 20px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+.message.error {
+    display: block;
+
+    color: #a61b1b;
+
+    background: #feecec;
+
+    border: 1px solid #f8caca;
+}
+
+.message.success {
+    display: block;
+
+    color: #166534;
+
+    background: #ecfdf3;
+
+    border: 1px solid #bbf7d0;
+}
+
+@media (max-width: 500px) {
+
+    .login-card {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}

@@ -11,10 +11,7 @@
 
     <title>حسابي | إدارة المعازيم</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -98,6 +95,43 @@
             </div>
 
 
+            <!-- يظهر للمدير فقط -->
+            <div
+                id="adminTools"
+                class="admin-tools"
+                hidden
+            >
+
+                <a
+                    href="members.html"
+                    class="admin-tool-link"
+                >
+
+                    <span class="admin-tool-icon">
+                        📊
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            تقارير الأعضاء
+                        </strong>
+
+                        <span>
+                            معرفة من أضاف كل مدعو
+                        </span>
+
+                    </div>
+
+                    <span class="admin-tool-arrow">
+                        ‹
+                    </span>
+
+                </a>
+
+            </div>
+
+
             <button
                 id="logoutBtn"
                 class="logout-account-btn"
@@ -116,55 +150,32 @@
             href="home.html"
             class="bottom-nav-item"
         >
-            <span class="nav-icon">
-                🏠
-            </span>
-
-            <span>
-                الرئيسية
-            </span>
+            <span class="nav-icon">🏠</span>
+            <span>الرئيسية</span>
         </a>
-
 
         <a
             href="add.html"
             class="bottom-nav-item"
         >
-            <span class="nav-icon">
-                ＋
-            </span>
-
-            <span>
-                إضافة
-            </span>
+            <span class="nav-icon">＋</span>
+            <span>إضافة</span>
         </a>
-
 
         <a
             href="guests.html"
             class="bottom-nav-item"
         >
-            <span class="nav-icon">
-                👥
-            </span>
-
-            <span>
-                المدعوون
-            </span>
+            <span class="nav-icon">👥</span>
+            <span>المدعوون</span>
         </a>
-
 
         <a
             href="account.html"
             class="bottom-nav-item active"
         >
-            <span class="nav-icon">
-                👤
-            </span>
-
-            <span>
-                حسابي
-            </span>
+            <span class="nav-icon">👤</span>
+            <span>حسابي</span>
         </a>
 
     </nav>
@@ -176,9 +187,7 @@
     ></div>
 
 
-    <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="supabase.js"></script>
 

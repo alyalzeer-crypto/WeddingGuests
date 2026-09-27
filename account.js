@@ -28,6 +28,11 @@ const logoutBtn =
         "logoutBtn"
     );
 
+const adminTools =
+    document.getElementById(
+        "adminTools"
+    );
+
 
 startAccountPage();
 
@@ -39,7 +44,6 @@ async function startAccountPage() {
 
 
     if (!ready) {
-
         return;
     }
 
@@ -54,9 +58,13 @@ async function startAccountPage() {
 
 function renderAccount() {
 
-    const roleText =
+    const isAdmin =
         currentProfile.role ===
-        "admin"
+        "admin";
+
+
+    const roleText =
+        isAdmin
             ? "مدير"
             : "عضو";
 
@@ -66,8 +74,7 @@ function renderAccount() {
 
 
     accountRole.textContent =
-        currentProfile.role ===
-        "admin"
+        isAdmin
             ? "حساب المدير"
             : "حساب عضو";
 
@@ -81,7 +88,19 @@ function renderAccount() {
 
 
     emailValue.textContent =
-        currentUser.email || "غير متوفر";
+        currentUser.email ||
+        "غير متوفر";
+
+
+    /*
+        أدوات المدير
+    */
+
+    if (isAdmin) {
+
+        adminTools.hidden =
+            false;
+    }
 }
 
 

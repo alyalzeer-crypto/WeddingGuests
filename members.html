@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>تقارير الأعضاء | إدارة المعازيم</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="app-page">
+
+        <header class="mobile-header">
+            <div>
+                <h1>تقارير الأعضاء</h1>
+
+                <p id="currentUserInfo">
+                    جاري التحميل...
+                </p>
+            </div>
+        </header>
+
+
+        <section class="members-summary">
+
+            <h2>نشاط الأعضاء</h2>
+
+            <p>
+                اضغط على أي عضو لعرض المدعوين الذين قام بإضافتهم
+            </p>
+
+        </section>
+
+
+        <section id="membersContainer">
+
+            <div class="empty-state">
+                جاري تحميل البيانات...
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <nav class="bottom-nav">
+
+        <a href="home.html" class="bottom-nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>الرئيسية</span>
+        </a>
+
+        <a href="add.html" class="bottom-nav-item">
+            <span class="nav-icon">＋</span>
+            <span>إضافة</span>
+        </a>
+
+        <a href="guests.html" class="bottom-nav-item">
+            <span class="nav-icon">👥</span>
+            <span>المدعوون</span>
+        </a>
+
+        <a href="account.html" class="bottom-nav-item active">
+            <span class="nav-icon">👤</span>
+            <span>حسابي</span>
+        </a>
+
+    </nav>
+
+
+    <div
+        id="toast"
+        class="toast"
+    ></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="common.js"></script>
+
+    <script src="members.js"></script>
+
+</body>
+
+</html>

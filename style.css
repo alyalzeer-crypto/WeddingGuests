@@ -1240,3 +1240,407 @@ body {
 
     cursor: not-allowed;
 }
+/* =========================================
+   أدوات المدير
+========================================= */
+
+.admin-tools {
+    margin-bottom: 20px;
+}
+
+.admin-tool-link {
+    display: grid;
+
+    grid-template-columns:
+        48px
+        1fr
+        25px;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px;
+
+    text-align: right;
+
+    text-decoration: none;
+
+    background: #eef5fb;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        #dbe9f5;
+
+    color: #173f66;
+}
+
+.admin-tool-icon {
+    width: 46px;
+
+    height: 46px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: white;
+
+    font-size: 23px;
+}
+
+.admin-tool-link strong {
+    display: block;
+
+    margin-bottom: 4px;
+}
+
+.admin-tool-link div span {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.admin-tool-arrow {
+    font-size: 30px;
+
+    color: #7792a8;
+}
+
+
+/* =========================================
+   تقارير الأعضاء
+========================================= */
+
+.members-summary {
+    background: white;
+
+    border:
+        1px solid
+        #e7ebef;
+
+    border-radius: 17px;
+
+    padding: 18px;
+
+    margin-bottom: 17px;
+
+    box-shadow:
+        0 5px 17px
+        rgba(0, 0, 0, 0.05);
+}
+
+.members-summary h2 {
+    color: #173f66;
+
+    margin-bottom: 5px;
+}
+
+.members-summary p {
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+.member-report-card {
+    background: white;
+
+    border:
+        1px solid
+        #e7ebef;
+
+    border-radius: 17px;
+
+    overflow: hidden;
+
+    margin-bottom: 13px;
+
+    box-shadow:
+        0 5px 17px
+        rgba(0, 0, 0, 0.055);
+}
+
+
+.member-report-header {
+    width: 100%;
+
+    border: none;
+
+    background: white;
+
+    padding: 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    cursor: pointer;
+
+    text-align: right;
+
+    color: inherit;
+}
+
+
+.member-report-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.member-avatar {
+    width: 47px;
+
+    height: 47px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef5fb;
+
+    font-size: 22px;
+}
+
+
+.member-report-user h3 {
+    color: #173f66;
+
+    font-size: 17px;
+
+    margin-bottom: 4px;
+}
+
+
+.member-report-user span {
+    color: #7b8491;
+
+    font-size: 12px;
+}
+
+
+.member-arrow {
+    color: #8a96a1;
+
+    font-size: 31px;
+
+    transition: 0.2s;
+}
+
+
+.member-arrow.open {
+    transform: rotate(-90deg);
+}
+
+
+/* الإحصائيات */
+
+.member-report-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 1px;
+
+    background: #edf0f2;
+
+    border-top:
+        1px solid
+        #edf0f2;
+
+    border-bottom:
+        1px solid
+        #edf0f2;
+}
+
+
+.member-report-stats div {
+    background: #fafbfc;
+
+    padding: 12px 5px;
+
+    text-align: center;
+}
+
+
+.member-report-stats span {
+    display: block;
+
+    color: #7b8491;
+
+    font-size: 10px;
+
+    margin-bottom: 5px;
+}
+
+
+.member-report-stats strong {
+    color: #173f66;
+
+    font-size: 19px;
+}
+
+
+.green-number {
+    color: #198754 !important;
+}
+
+
+.red-number {
+    color: #dc3545 !important;
+}
+
+
+/* قائمة المدعوين */
+
+.member-guests-list {
+    display: none;
+
+    padding: 8px 16px 15px;
+}
+
+
+.member-guests-list.show {
+    display: block;
+}
+
+
+.member-guest-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid
+        #edf0f2;
+}
+
+
+.member-guest-row:last-child {
+    border-bottom: none;
+}
+
+
+.member-guest-name {
+    display: block;
+
+    color: #1f2937;
+
+    font-size: 15px;
+
+    margin-bottom: 4px;
+}
+
+
+.member-guest-count {
+    color: #7b8491;
+
+    font-size: 11px;
+}
+
+
+.member-guest-status {
+    padding: 6px 9px;
+
+    border-radius: 999px;
+
+    white-space: nowrap;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+.member-guest-status.invited {
+    background: #e7f8ee;
+
+    color: #198754;
+}
+
+
+.member-guest-status.pending {
+    background: #fff0f1;
+
+    color: #dc3545;
+}
+
+
+.member-no-guests {
+    padding: 20px;
+
+    text-align: center;
+
+    color: #7b8491;
+
+    font-size: 13px;
+}
+
+
+.unknown-report {
+    border-color: #f0dcae;
+}
+
+
+/* الهاتف الصغير */
+
+@media (max-width: 430px) {
+
+    .member-report-stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+/* =========================================
+   تقرير المدير
+========================================= */
+
+.admin-report-card {
+    border:
+        2px solid
+        #d7b45a;
+}
+
+.admin-report-card
+.member-report-header {
+    background:
+        linear-gradient(
+            135deg,
+            #fffaf0,
+            #fff
+        );
+}
+
+.admin-report-card
+.member-avatar {
+    background: #fff3cd;
+}
+
+.admin-report-card
+.member-report-user h3 {
+    color: #9a6c00;
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>إضافة مدعو | إدارة المعازيم</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <main class="app-page">
+
+        <header class="mobile-header">
+
+            <div>
+                <h1>إضافة مدعو</h1>
+
+                <p id="currentUserInfo">
+                    جاري التحميل...
+                </p>
+            </div>
+
+        </header>
+
+
+        <section class="form-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>بيانات المدعو</h2>
+
+                    <p>
+                        أدخل معلومات المدعو ثم احفظها
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="guestName">
+                    اسم المدعو
+                </label>
+
+                <input
+                    type="text"
+                    id="guestName"
+                    placeholder="مثال: أحمد محمد"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="guestCount">
+                    عدد الأشخاص
+                </label>
+
+                <input
+                    type="number"
+                    id="guestCount"
+                    min="1"
+                    value="1"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="guestStatus">
+                    حالة الدعوة
+                </label>
+
+                <select id="guestStatus">
+
+                    <option value="not-invited">
+                        لم تتم دعوته
+                    </option>
+
+                    <option value="invited">
+                        تمت دعوته
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                id="addGuestBtn"
+                class="primary-btn"
+            >
+                إضافة المدعو
+            </button>
+
+
+            <a
+                href="guests.html"
+                class="secondary-link"
+            >
+                عرض قائمة المدعوين
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <nav class="bottom-nav">
+
+        <a
+            href="home.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                🏠
+            </span>
+
+            <span>
+                الرئيسية
+            </span>
+        </a>
+
+
+        <a
+            href="add.html"
+            class="bottom-nav-item active"
+        >
+            <span class="nav-icon">
+                ＋
+            </span>
+
+            <span>
+                إضافة
+            </span>
+        </a>
+
+
+        <a
+            href="guests.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                👥
+            </span>
+
+            <span>
+                المدعوون
+            </span>
+        </a>
+
+
+        <a
+            href="account.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                👤
+            </span>
+
+            <span>
+                حسابي
+            </span>
+        </a>
+
+    </nav>
+
+
+    <div
+        id="toast"
+        class="toast"
+    ></div>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="common.js"></script>
+
+    <script src="add.js"></script>
+
+</body>
+
+</html>

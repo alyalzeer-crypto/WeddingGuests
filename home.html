@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>الرئيسية | إدارة المعازيم</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <main class="app-page">
+
+        <!-- أعلى الصفحة -->
+        <header class="mobile-header">
+
+            <div>
+                <h1>إدارة المعازيم</h1>
+
+                <p id="currentUserInfo">
+                    جاري التحميل...
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- ترحيب -->
+        <section class="welcome-box">
+
+            <div>
+                <span class="welcome-label">
+                    مرحبًا
+                </span>
+
+                <h2 id="welcomeUsername">
+                    ...
+                </h2>
+
+                <p id="welcomeRole">
+                    ...
+                </p>
+            </div>
+
+            <div class="welcome-icon">
+                🎉
+            </div>
+
+        </section>
+
+
+        <!-- الإحصائيات -->
+        <section class="home-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>الإحصائيات</h2>
+
+                    <p id="statsDescription">
+                        ملخص المدعوين
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="mobile-stats">
+
+                <a
+                    href="guests.html?filter=all"
+                    class="mobile-stat-card total-stat"
+                >
+
+                    <span class="stat-icon">
+                        👥
+                    </span>
+
+                    <div>
+                        <span class="stat-title">
+                            إجمالي المدعوين
+                        </span>
+
+                        <strong id="totalGuests">
+                            0
+                        </strong>
+                    </div>
+
+                    <span class="stat-arrow">
+                        ‹
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="guests.html?filter=invited"
+                    class="mobile-stat-card invited-stat"
+                >
+
+                    <span class="stat-icon">
+                        ✓
+                    </span>
+
+                    <div>
+                        <span class="stat-title">
+                            تمت دعوتهم
+                        </span>
+
+                        <strong id="invitedGuests">
+                            0
+                        </strong>
+                    </div>
+
+                    <span class="stat-arrow">
+                        ‹
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="guests.html?filter=not-invited"
+                    class="mobile-stat-card pending-stat"
+                >
+
+                    <span class="stat-icon">
+                        ⏳
+                    </span>
+
+                    <div>
+                        <span class="stat-title">
+                            لم تتم دعوتهم
+                        </span>
+
+                        <strong id="notInvitedGuests">
+                            0
+                        </strong>
+                    </div>
+
+                    <span class="stat-arrow">
+                        ‹
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- اختصارات -->
+        <section class="home-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>الوصول السريع</h2>
+
+                    <p>
+                        اختر المهمة التي تريد تنفيذها
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <a
+                    href="add.html"
+                    class="quick-action"
+                >
+                    <span class="quick-icon">
+                        ＋
+                    </span>
+
+                    <span>
+                        إضافة مدعو
+                    </span>
+                </a>
+
+
+                <a
+                    href="guests.html"
+                    class="quick-action"
+                >
+                    <span class="quick-icon">
+                        ☰
+                    </span>
+
+                    <span>
+                        قائمة المدعوين
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- التنقل السفلي -->
+    <nav class="bottom-nav">
+
+        <a
+            href="home.html"
+            class="bottom-nav-item active"
+        >
+            <span class="nav-icon">
+                🏠
+            </span>
+
+            <span>
+                الرئيسية
+            </span>
+        </a>
+
+
+        <a
+            href="add.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                ＋
+            </span>
+
+            <span>
+                إضافة
+            </span>
+        </a>
+
+
+        <a
+            href="guests.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                👥
+            </span>
+
+            <span>
+                المدعوون
+            </span>
+        </a>
+
+
+        <a
+            href="account.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                👤
+            </span>
+
+            <span>
+                حسابي
+            </span>
+        </a>
+
+    </nav>
+
+
+    <!-- الرسائل -->
+    <div
+        id="toast"
+        class="toast"
+    ></div>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="common.js"></script>
+
+    <script src="home.js"></script>
+
+</body>
+
+</html>

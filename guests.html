@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>قائمة المدعوين | إدارة المعازيم</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <main class="app-page">
+
+        <header class="mobile-header">
+
+            <div>
+                <h1>قائمة المدعوين</h1>
+
+                <p id="currentUserInfo">
+                    جاري التحميل...
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- البحث -->
+        <section class="guest-toolbar">
+
+            <input
+                type="text"
+                id="searchGuest"
+                class="search-input"
+                placeholder="ابحث عن مدعو..."
+                autocomplete="off"
+            >
+
+
+            <div class="filter-tabs">
+
+                <button
+                    class="filter-btn active"
+                    data-filter="all"
+                >
+                    الجميع
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="invited"
+                >
+                    تمت دعوتهم
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="not-invited"
+                >
+                    لم تتم دعوتهم
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- عنوان الحالة الحالية -->
+        <section class="list-status">
+
+            <div>
+
+                <h2 id="listTitle">
+                    جميع المدعوين
+                </h2>
+
+                <p id="listCount">
+                    0 مدعو
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- القائمة -->
+        <section id="guestsContainer">
+        </section>
+
+    </main>
+
+
+    <!-- نافذة تعديل الاسم -->
+    <div
+        id="editNameModal"
+        class="modal-overlay"
+    >
+
+        <div class="custom-modal">
+
+            <h2>تعديل اسم المدعو</h2>
+
+            <p>
+                أدخل الاسم الصحيح للمدعو
+            </p>
+
+            <input
+                type="text"
+                id="editGuestNameInput"
+                placeholder="اسم المدعو"
+            >
+
+            <div class="modal-actions">
+
+                <button
+                    id="saveGuestNameBtn"
+                    class="modal-save-btn"
+                >
+                    حفظ التعديل
+                </button>
+
+                <button
+                    id="cancelEditNameBtn"
+                    class="modal-cancel-btn"
+                >
+                    إلغاء
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- الرسائل -->
+    <div
+        id="toast"
+        class="toast"
+    ></div>
+
+
+    <!-- التنقل السفلي -->
+    <nav class="bottom-nav">
+
+        <a
+            href="home.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                🏠
+            </span>
+
+            <span>
+                الرئيسية
+            </span>
+        </a>
+
+
+        <a
+            href="add.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                ＋
+            </span>
+
+            <span>
+                إضافة
+            </span>
+        </a>
+
+
+        <a
+            href="guests.html"
+            class="bottom-nav-item active"
+        >
+            <span class="nav-icon">
+                👥
+            </span>
+
+            <span>
+                المدعوون
+            </span>
+        </a>
+
+
+        <a
+            href="account.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                👤
+            </span>
+
+            <span>
+                حسابي
+            </span>
+        </a>
+
+    </nav>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="common.js"></script>
+
+    <script src="guests.js"></script>
+
+</body>
+
+</html>

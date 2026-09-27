@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>حسابي | إدارة المعازيم</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <main class="app-page">
+
+        <header class="mobile-header">
+
+            <div>
+                <h1>حسابي</h1>
+
+                <p id="currentUserInfo">
+                    جاري التحميل...
+                </p>
+            </div>
+
+        </header>
+
+
+        <section class="account-card">
+
+            <div class="account-avatar">
+                👤
+            </div>
+
+            <h2 id="accountUsername">
+                ...
+            </h2>
+
+            <p
+                id="accountRole"
+                class="account-role"
+            >
+                ...
+            </p>
+
+
+            <div class="account-info-list">
+
+                <div class="account-info-row">
+
+                    <span>
+                        اسم المستخدم
+                    </span>
+
+                    <strong id="usernameValue">
+                        ...
+                    </strong>
+
+                </div>
+
+
+                <div class="account-info-row">
+
+                    <span>
+                        نوع الحساب
+                    </span>
+
+                    <strong id="roleValue">
+                        ...
+                    </strong>
+
+                </div>
+
+
+                <div class="account-info-row">
+
+                    <span>
+                        البريد الإلكتروني
+                    </span>
+
+                    <strong
+                        id="emailValue"
+                        class="email-value"
+                    >
+                        ...
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="logoutBtn"
+                class="logout-account-btn"
+            >
+                تسجيل الخروج
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <nav class="bottom-nav">
+
+        <a
+            href="home.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                🏠
+            </span>
+
+            <span>
+                الرئيسية
+            </span>
+        </a>
+
+
+        <a
+            href="add.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                ＋
+            </span>
+
+            <span>
+                إضافة
+            </span>
+        </a>
+
+
+        <a
+            href="guests.html"
+            class="bottom-nav-item"
+        >
+            <span class="nav-icon">
+                👥
+            </span>
+
+            <span>
+                المدعوون
+            </span>
+        </a>
+
+
+        <a
+            href="account.html"
+            class="bottom-nav-item active"
+        >
+            <span class="nav-icon">
+                👤
+            </span>
+
+            <span>
+                حسابي
+            </span>
+        </a>
+
+    </nav>
+
+
+    <div
+        id="toast"
+        class="toast"
+    ></div>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="common.js"></script>
+
+    <script src="account.js"></script>
+
+</body>
+
+</html>

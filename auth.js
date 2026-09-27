@@ -12,22 +12,26 @@ const message =
 
 
 /* =========================================
-   إذا كان المستخدم مسجلًا أصلًا
+   فحص الجلسة الحالية
 ========================================= */
 
 async function checkExistingSession() {
 
     const {
         data: { session }
-    } = await supabaseClient.auth.getSession();
+    } =
+        await supabaseClient
+            .auth
+            .getSession();
+
 
     if (session) {
 
         window.location.href =
-            "dashboard.html";
-
+            "home.html";
     }
 }
+
 
 checkExistingSession();
 
@@ -45,13 +49,19 @@ loginBtn.addEventListener(
 async function login() {
 
     const email =
-        emailInput.value.trim();
+        emailInput
+            .value
+            .trim();
+
 
     const password =
         passwordInput.value;
 
 
-    if (!email || !password) {
+    if (
+        !email ||
+        !password
+    ) {
 
         showMessage(
             "يرجى إدخال البريد الإلكتروني وكلمة المرور",
@@ -62,7 +72,9 @@ async function login() {
     }
 
 
-    loginBtn.disabled = true;
+    loginBtn.disabled =
+        true;
+
 
     loginBtn.textContent =
         "جاري تسجيل الدخول...";
@@ -72,16 +84,20 @@ async function login() {
         data,
         error
     } =
-        await supabaseClient.auth.signInWithPassword({
+        await supabaseClient
+            .auth
+            .signInWithPassword({
+                email:
+                    email,
 
-            email: email,
-
-            password: password
-
-        });
+                password:
+                    password
+            });
 
 
-    loginBtn.disabled = false;
+    loginBtn.disabled =
+        false;
+
 
     loginBtn.textContent =
         "تسجيل الدخول";
@@ -89,7 +105,10 @@ async function login() {
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
+
 
         showMessage(
             "البريد الإلكتروني أو كلمة المرور غير صحيحة",
@@ -108,13 +127,15 @@ async function login() {
         );
 
 
-        setTimeout(function () {
+        setTimeout(
+            function () {
 
-            window.location.href =
-                "dashboard.html";
+                window.location.href =
+                    "home.html";
 
-        }, 500);
-
+            },
+            350
+        );
     }
 }
 
@@ -127,18 +148,19 @@ passwordInput.addEventListener(
     "keydown",
     function (event) {
 
-        if (event.key === "Enter") {
+        if (
+            event.key ===
+            "Enter"
+        ) {
 
             login();
-
         }
-
     }
 );
 
 
 /* =========================================
-   عرض الرسائل
+   الرسائل
 ========================================= */
 
 function showMessage(
@@ -146,9 +168,10 @@ function showMessage(
     type
 ) {
 
-    message.textContent = text;
+    message.textContent =
+        text;
+
 
     message.className =
         "message " + type;
-
 }

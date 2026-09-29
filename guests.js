@@ -1,3 +1,7 @@
+/* =========================================================
+   عناصر الصفحة
+========================================================= */
+
 const guestsContainer =
     document.getElementById(
         "guestsContainer"
@@ -18,11 +22,30 @@ const listCount =
         "listCount"
     );
 
-const filterButtons =
+
+/* =========================================================
+   فلاتر الحالة
+========================================================= */
+
+const statusFilterButtons =
     document.querySelectorAll(
-        ".filter-btn"
+        ".status-filter"
     );
 
+
+/* =========================================================
+   فلاتر الجنس
+========================================================= */
+
+const genderFilterButtons =
+    document.querySelectorAll(
+        ".gender-filter-btn"
+    );
+
+
+/* =========================================================
+   نافذة تعديل الاسم
+========================================================= */
 
 const editNameModal =
     document.getElementById(
@@ -45,12 +68,57 @@ const cancelEditNameBtn =
     );
 
 
+/* =========================================================
+   نافذة الجنس
+========================================================= */
+
+const genderModal =
+    document.getElementById(
+        "genderModal"
+    );
+
+const genderGuestName =
+    document.getElementById(
+        "genderGuestName"
+    );
+
+const setMaleBtn =
+    document.getElementById(
+        "setMaleBtn"
+    );
+
+const setFemaleBtn =
+    document.getElementById(
+        "setFemaleBtn"
+    );
+
+const clearGenderBtn =
+    document.getElementById(
+        "clearGenderBtn"
+    );
+
+const cancelGenderBtn =
+    document.getElementById(
+        "cancelGenderBtn"
+    );
+
+
+/* =========================================================
+   المتغيرات
+========================================================= */
+
 let guests = [];
 
-let currentFilter =
+let currentStatusFilter =
+    "all";
+
+let currentGenderFilter =
     "all";
 
 let editingGuestId =
+    null;
+
+let genderEditingGuestId =
     null;
 
 
@@ -73,7 +141,7 @@ async function startGuestsPage() {
     }
 
 
-    readFilterFromUrl();
+    readFiltersFromUrl();
 
 
     await loadGuests();
@@ -84,7 +152,7 @@ async function startGuestsPage() {
    قراءة الفلتر من الرابط
 ========================================================= */
 
-function readFilterFromUrl() {
+function readFiltersFromUrl() {
 
     const params =
         new URLSearchParams(
@@ -92,23 +160,42 @@ function readFilterFromUrl() {
         );
 
 
-    const filter =
+    const status =
         params.get(
             "filter"
         );
 
 
+    const gender =
+        params.get(
+            "gender"
+        );
+
+
     if (
-        filter === "invited" ||
-        filter === "not-invited"
+        status === "invited" ||
+        status === "not-invited"
     ) {
 
-        currentFilter =
-            filter;
+        currentStatusFilter =
+            status;
     }
 
 
-    updateFilterButtons();
+    if (
+        gender === "male" ||
+        gender === "female" ||
+        gender === "unknown"
+    ) {
+
+        currentGenderFilter =
+            gender;
+    }
+
+
+    updateStatusFilterButtons();
+
+    updateGenderFilterButtons();
 }
 
 
@@ -139,8 +226,8 @@ async function loadGuests() {
 
 
     /*
-        العضو يرى مدعويه فقط.
-        المدير يرى الجميع.
+        العضو يرى فقط المدعوين
+        الذين أضافهم.
     */
 
     if (
@@ -173,7 +260,9 @@ async function loadGuests() {
 
         guestsContainer.innerHTML = `
             <div class="empty-state">
+
                 تعذر تحميل المدعوين
+
             </div>
         `;
 
@@ -197,7 +286,7 @@ async function loadGuests() {
 
 
 /* =========================================================
-   تطبيق البحث والفلتر
+   تطبيق البحث والفلاتر
 ========================================================= */
 
 function applyFilters() {
@@ -212,8 +301,12 @@ function applyFilters() {
         [...guests];
 
 
+    /* ===========================
+       فلتر حالة الدعوة
+    =========================== */
+
     if (
-        currentFilter ===
+        currentStatusFilter ===
         "invited"
     ) {
 
@@ -227,7 +320,7 @@ function applyFilters() {
             );
 
     } else if (
-        currentFilter ===
+        currentStatusFilter ===
         "not-invited"
     ) {
 
@@ -241,6 +334,61 @@ function applyFilters() {
             );
     }
 
+
+    /* ===========================
+       فلتر الجنس
+    =========================== */
+
+    if (
+        currentGenderFilter ===
+        "male"
+    ) {
+
+        filtered =
+            filtered.filter(
+                function (guest) {
+
+                    return guest.gender ===
+                        "male";
+                }
+            );
+
+    } else if (
+        currentGenderFilter ===
+        "female"
+    ) {
+
+        filtered =
+            filtered.filter(
+                function (guest) {
+
+                    return guest.gender ===
+                        "female";
+                }
+            );
+
+    } else if (
+        currentGenderFilter ===
+        "unknown"
+    ) {
+
+        filtered =
+            filtered.filter(
+                function (guest) {
+
+                    return (
+                        guest.gender === null ||
+                        guest.gender === undefined ||
+                        guest.gender === ""
+                    );
+                }
+            );
+    }
+
+
+    /* ===========================
+       البحث
+    =========================== */
 
     if (searchText) {
 
@@ -270,34 +418,68 @@ function applyFilters() {
 
 
 /* =========================================================
-   عنوان القائمة
+   تحديث عنوان القائمة
 ========================================================= */
 
 function updateListHeader(
     count
 ) {
 
+    let statusText =
+        "جميع المدعوين";
+
+
     if (
-        currentFilter ===
-        "all"
-    ) {
-
-        listTitle.textContent =
-            "جميع المدعوين";
-
-    } else if (
-        currentFilter ===
+        currentStatusFilter ===
         "invited"
     ) {
 
-        listTitle.textContent =
+        statusText =
             "من تمت دعوتهم";
 
-    } else {
+    } else if (
+        currentStatusFilter ===
+        "not-invited"
+    ) {
 
-        listTitle.textContent =
+        statusText =
             "من لم تتم دعوتهم";
     }
+
+
+    let genderText =
+        "";
+
+
+    if (
+        currentGenderFilter ===
+        "male"
+    ) {
+
+        genderText =
+            " - الرجال";
+
+    } else if (
+        currentGenderFilter ===
+        "female"
+    ) {
+
+        genderText =
+            " - النساء";
+
+    } else if (
+        currentGenderFilter ===
+        "unknown"
+    ) {
+
+        genderText =
+            " - غير محدد";
+    }
+
+
+    listTitle.textContent =
+        statusText +
+        genderText;
 
 
     listCount.textContent =
@@ -306,21 +488,21 @@ function updateListHeader(
 
 
 /* =========================================================
-   أزرار الفلترة
+   فلتر حالة الدعوة
 ========================================================= */
 
-filterButtons.forEach(
+statusFilterButtons.forEach(
     function (button) {
 
         button.addEventListener(
             "click",
             function () {
 
-                currentFilter =
+                currentStatusFilter =
                     button.dataset.filter;
 
 
-                updateFilterButtons();
+                updateStatusFilterButtons();
 
 
                 applyFilters();
@@ -331,15 +513,56 @@ filterButtons.forEach(
 );
 
 
-function updateFilterButtons() {
+function updateStatusFilterButtons() {
 
-    filterButtons.forEach(
+    statusFilterButtons.forEach(
         function (button) {
 
             button.classList.toggle(
                 "active",
                 button.dataset.filter ===
-                    currentFilter
+                    currentStatusFilter
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   فلتر الجنس
+========================================================= */
+
+genderFilterButtons.forEach(
+    function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                currentGenderFilter =
+                    button.dataset.gender;
+
+
+                updateGenderFilterButtons();
+
+
+                applyFilters();
+            }
+        );
+
+    }
+);
+
+
+function updateGenderFilterButtons() {
+
+    genderFilterButtons.forEach(
+        function (button) {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.gender ===
+                    currentGenderFilter
             );
         }
     );
@@ -384,11 +607,12 @@ function displayGuests(
                 </h3>
 
                 <p>
-                    لا يوجد مدعوون مطابقون للبحث أو الفلتر الحالي
+                    لا يوجد مدعوون مطابقون للبحث أو الفلاتر الحالية
                 </p>
 
             </div>
         `;
+
 
         return;
     }
@@ -424,12 +648,63 @@ function displayGuests(
                     : "guest-status pending";
 
 
+            /* ===========================
+               الجنس
+            =========================== */
+
+            let genderText =
+                "غير محدد";
+
+
+            let genderClass =
+                "unknown";
+
+
+            let genderIcon =
+                "❔";
+
+
+            if (
+                guest.gender ===
+                "male"
+            ) {
+
+                genderText =
+                    "ذكر";
+
+                genderClass =
+                    "male";
+
+                genderIcon =
+                    "👨";
+
+            } else if (
+                guest.gender ===
+                "female"
+            ) {
+
+                genderText =
+                    "أنثى";
+
+                genderClass =
+                    "female";
+
+                genderIcon =
+                    "👩";
+            }
+
+
+            /* ===========================
+               من أضافه
+            =========================== */
+
             const creatorHtml =
                 currentProfile.role ===
                 "admin"
 
                     ? `
                         <div class="guest-meta-row">
+
                             <span>
                                 أضافه
                             </span>
@@ -444,11 +719,16 @@ function displayGuests(
                                     )
                                 }
                             </strong>
+
                         </div>
                     `
 
                     : "";
 
+
+            /* ===========================
+               الحذف للمدير
+            =========================== */
 
             const deleteButton =
                 currentProfile.role ===
@@ -477,16 +757,37 @@ function displayGuests(
                     <div>
 
                         <h3 class="guest-name">
+
                             ${escapeHtml(
                                 guest.name
                             )}
+
                         </h3>
 
-                        <span
-                            class="${statusClass}"
-                        >
-                            ${statusText}
-                        </span>
+
+                        <div class="guest-badges">
+
+                            <span
+                                class="${statusClass}"
+                            >
+                                ${statusText}
+                            </span>
+
+
+                            <span
+                                class="
+                                    gender-badge
+                                    ${genderClass}
+                                "
+                            >
+
+                                ${genderIcon}
+
+                                ${genderText}
+
+                            </span>
+
+                        </div>
 
                     </div>
 
@@ -510,6 +811,18 @@ function displayGuests(
 
                     ${creatorHtml}
 
+                    <div class="guest-meta-row">
+
+                        <span>
+                            الجنس
+                        </span>
+
+                        <strong>
+                            ${genderText}
+                        </strong>
+
+                    </div>
+
                 </div>
 
 
@@ -528,6 +841,18 @@ function displayGuests(
 
 
                     <button
+                        class="guest-action-btn gender-action"
+                        onclick="
+                            openGenderModal(
+                                ${guest.id}
+                            )
+                        "
+                    >
+                        تحديد الجنس
+                    </button>
+
+
+                    <button
                         class="guest-action-btn warning"
                         onclick="
                             toggleGuestStatus(
@@ -535,11 +860,13 @@ function displayGuests(
                             )
                         "
                     >
+
                         ${
                             invited
                                 ? "إلغاء الدعوة"
                                 : "تمت دعوته"
                         }
+
                     </button>
 
 
@@ -559,7 +886,7 @@ function displayGuests(
 
 
 /* =========================================================
-   فتح تعديل الاسم
+   تعديل الاسم
 ========================================================= */
 
 function editGuestName(
@@ -649,7 +976,7 @@ editNameModal.addEventListener(
 
 
 /* =========================================================
-   حفظ تعديل الاسم
+   حفظ الاسم
 ========================================================= */
 
 saveGuestNameBtn.addEventListener(
@@ -722,10 +1049,6 @@ async function saveGuestName() {
         return;
     }
 
-
-    /*
-        فحص تكرار الاسم.
-    */
 
     const duplicate =
         guests.some(
@@ -836,7 +1159,236 @@ async function saveGuestName() {
 
 
 /* =========================================================
-   تغيير الحالة
+   نافذة الجنس
+========================================================= */
+
+function openGenderModal(
+    id
+) {
+
+    const guest =
+        guests.find(
+            function (item) {
+
+                return item.id === id;
+            }
+        );
+
+
+    if (!guest) {
+
+        return;
+    }
+
+
+    genderEditingGuestId =
+        id;
+
+
+    genderGuestName.textContent =
+        `المدعو: ${guest.name}`;
+
+
+    genderModal.classList.add(
+        "show"
+    );
+}
+
+
+/* =========================================================
+   إغلاق نافذة الجنس
+========================================================= */
+
+function closeGenderModal() {
+
+    genderModal.classList.remove(
+        "show"
+    );
+
+
+    genderEditingGuestId =
+        null;
+}
+
+
+cancelGenderBtn.addEventListener(
+    "click",
+    closeGenderModal
+);
+
+
+genderModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target ===
+            genderModal
+        ) {
+
+            closeGenderModal();
+        }
+    }
+);
+
+
+/* =========================================================
+   ذكر
+========================================================= */
+
+setMaleBtn.addEventListener(
+    "click",
+    function () {
+
+        updateGuestGender(
+            "male"
+        );
+    }
+);
+
+
+/* =========================================================
+   أنثى
+========================================================= */
+
+setFemaleBtn.addEventListener(
+    "click",
+    function () {
+
+        updateGuestGender(
+            "female"
+        );
+    }
+);
+
+
+/* =========================================================
+   غير محدد
+========================================================= */
+
+clearGenderBtn.addEventListener(
+    "click",
+    function () {
+
+        updateGuestGender(
+            null
+        );
+    }
+);
+
+
+/* =========================================================
+   تحديث الجنس في Supabase
+========================================================= */
+
+async function updateGuestGender(
+    gender
+) {
+
+    if (
+        genderEditingGuestId ===
+        null
+    ) {
+
+        return;
+    }
+
+
+    setMaleBtn.disabled =
+        true;
+
+    setFemaleBtn.disabled =
+        true;
+
+    clearGenderBtn.disabled =
+        true;
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+
+            .from("guests")
+
+            .update({
+                gender:
+                    gender
+            })
+
+            .eq(
+                "id",
+                genderEditingGuestId
+            );
+
+
+    setMaleBtn.disabled =
+        false;
+
+    setFemaleBtn.disabled =
+        false;
+
+    clearGenderBtn.disabled =
+        false;
+
+
+    if (error) {
+
+        console.error(
+            "Update gender error:",
+            error
+        );
+
+
+        showToast(
+            "تعذر تعديل الجنس",
+            "error"
+        );
+
+        return;
+    }
+
+
+    closeGenderModal();
+
+
+    await loadGuests();
+
+
+    let message =
+        "تم تعديل الجنس";
+
+
+    if (
+        gender === "male"
+    ) {
+
+        message =
+            "تم تحديد المدعو كذكر";
+
+    } else if (
+        gender === "female"
+    ) {
+
+        message =
+            "تم تحديد المدعو كأنثى";
+
+    } else {
+
+        message =
+            "تم جعل الجنس غير محدد";
+    }
+
+
+    showToast(
+        message,
+        "success"
+    );
+}
+
+
+/* =========================================================
+   تغيير حالة الدعوة
 ========================================================= */
 
 async function toggleGuestStatus(
@@ -912,7 +1464,7 @@ async function toggleGuestStatus(
 
 
 /* =========================================================
-   حذف
+   حذف المدعو
 ========================================================= */
 
 async function deleteGuest(
@@ -997,7 +1549,7 @@ async function deleteGuest(
 
 
 /* =========================================================
-   Enter في نافذة التعديل
+   Enter / Escape
 ========================================================= */
 
 editGuestNameInput.addEventListener(
@@ -1017,6 +1569,21 @@ editGuestNameInput.addEventListener(
         ) {
 
             closeEditModal();
+        }
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+            closeGenderModal();
         }
     }
 );

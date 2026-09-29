@@ -21,6 +21,7 @@
 
     <main class="app-page">
 
+        <!-- رأس الصفحة -->
         <header class="mobile-header">
 
             <div>
@@ -34,9 +35,10 @@
         </header>
 
 
-        <!-- البحث -->
+        <!-- البحث والفلاتر -->
         <section class="guest-toolbar">
 
+            <!-- البحث -->
             <input
                 type="text"
                 id="searchGuest"
@@ -46,35 +48,86 @@
             >
 
 
-            <div class="filter-tabs">
+            <!-- فلتر حالة الدعوة -->
+            <div class="filter-section">
 
-                <button
-                    class="filter-btn active"
-                    data-filter="all"
-                >
-                    الجميع
-                </button>
+                <p class="filter-label">
+                    حالة الدعوة
+                </p>
 
-                <button
-                    class="filter-btn"
-                    data-filter="invited"
-                >
-                    تمت دعوتهم
-                </button>
+                <div class="filter-tabs">
 
-                <button
-                    class="filter-btn"
-                    data-filter="not-invited"
-                >
-                    لم تتم دعوتهم
-                </button>
+                    <button
+                        class="filter-btn status-filter active"
+                        data-filter="all"
+                    >
+                        الجميع
+                    </button>
+
+                    <button
+                        class="filter-btn status-filter"
+                        data-filter="invited"
+                    >
+                        تمت دعوتهم
+                    </button>
+
+                    <button
+                        class="filter-btn status-filter"
+                        data-filter="not-invited"
+                    >
+                        لم تتم دعوتهم
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- فلتر الجنس -->
+            <div class="filter-section gender-filter-section">
+
+                <p class="filter-label">
+                    الجنس
+                </p>
+
+                <div class="gender-filter-tabs">
+
+                    <button
+                        class="gender-filter-btn active"
+                        data-gender="all"
+                    >
+                        الجميع
+                    </button>
+
+                    <button
+                        class="gender-filter-btn"
+                        data-gender="male"
+                    >
+                        الرجال
+                    </button>
+
+                    <button
+                        class="gender-filter-btn"
+                        data-gender="female"
+                    >
+                        النساء
+                    </button>
+
+                    <button
+                        class="gender-filter-btn"
+                        data-gender="unknown"
+                    >
+                        غير محدد
+                    </button>
+
+                </div>
 
             </div>
 
         </section>
 
 
-        <!-- عنوان الحالة الحالية -->
+        <!-- عنوان القائمة -->
         <section class="list-status">
 
             <div>
@@ -92,14 +145,17 @@
         </section>
 
 
-        <!-- القائمة -->
+        <!-- قائمة المدعوين -->
         <section id="guestsContainer">
         </section>
 
     </main>
 
 
-    <!-- نافذة تعديل الاسم -->
+    <!-- =========================================
+         نافذة تعديل الاسم
+    ========================================== -->
+
     <div
         id="editNameModal"
         class="modal-overlay"
@@ -107,7 +163,9 @@
 
         <div class="custom-modal">
 
-            <h2>تعديل اسم المدعو</h2>
+            <h2>
+                تعديل اسم المدعو
+            </h2>
 
             <p>
                 أدخل الاسم الصحيح للمدعو
@@ -136,6 +194,72 @@
                 </button>
 
             </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         نافذة اختيار الجنس
+    ========================================== -->
+
+    <div
+        id="genderModal"
+        class="modal-overlay"
+    >
+
+        <div class="custom-modal gender-modal">
+
+            <h2>
+                تحديد الجنس
+            </h2>
+
+            <p id="genderGuestName">
+                اختر جنس المدعو
+            </p>
+
+
+            <div class="gender-choice-grid">
+
+                <button
+                    id="setMaleBtn"
+                    class="gender-choice-btn male-choice"
+                >
+                    👨
+                    <span>
+                        ذكر
+                    </span>
+                </button>
+
+
+                <button
+                    id="setFemaleBtn"
+                    class="gender-choice-btn female-choice"
+                >
+                    👩
+                    <span>
+                        أنثى
+                    </span>
+                </button>
+
+            </div>
+
+
+            <button
+                id="clearGenderBtn"
+                class="clear-gender-btn"
+            >
+                جعله غير محدد
+            </button>
+
+
+            <button
+                id="cancelGenderBtn"
+                class="modal-cancel-btn gender-cancel-btn"
+            >
+                إلغاء
+            </button>
 
         </div>
 

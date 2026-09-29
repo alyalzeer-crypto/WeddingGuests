@@ -1644,3 +1644,164 @@ body {
 .member-report-user h3 {
     color: #9a6c00;
 }
+/* =========================================
+   فلتر الجنس
+========================================= */
+
+.filter-section {
+    margin-top: 12px;
+}
+
+.filter-label {
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.gender-filter-section {
+    padding-top: 10px;
+    border-top: 1px solid #edf0f2;
+}
+
+.gender-filter-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.gender-filter-btn {
+    border: none;
+    padding: 10px 5px;
+    border-radius: 10px;
+    background: #eef1f4;
+    color: #5d6672;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.gender-filter-btn.active {
+    background: #173f66;
+    color: white;
+}
+
+
+/* =========================================
+   شارات المدعو
+========================================= */
+
+.guest-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.gender-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.gender-badge.male {
+    background: #e8f2ff;
+    color: #2464a3;
+}
+
+.gender-badge.female {
+    background: #fff0f6;
+    color: #c43d78;
+}
+
+.gender-badge.unknown {
+    background: #f0f1f3;
+    color: #707780;
+}
+
+
+/* =========================================
+   زر الجنس
+========================================= */
+
+.guest-action-btn.gender-action {
+    background: #7257a8;
+}
+
+.guest-action-btn.gender-action:hover {
+    background: #5e478c;
+}
+
+
+/* =========================================
+   نافذة اختيار الجنس
+========================================= */
+
+.gender-modal {
+    max-width: 400px;
+}
+
+.gender-choice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.gender-choice-btn {
+    border: none;
+    border-radius: 14px;
+    padding: 20px 10px;
+    cursor: pointer;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.gender-choice-btn span {
+    display: block;
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+.male-choice {
+    background: #e8f2ff;
+    color: #2464a3;
+}
+
+.female-choice {
+    background: #fff0f6;
+    color: #c43d78;
+}
+
+.clear-gender-btn {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    background: #e9ecef;
+    color: #555;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.gender-cancel-btn {
+    width: 100%;
+}
+
+
+/* =========================================
+   الهاتف الصغير
+========================================= */
+
+@media (max-width: 390px) {
+
+    .gender-filter-tabs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}

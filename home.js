@@ -1,7 +1,3 @@
-/* =========================================================
-   تشغيل الصفحة
-========================================================= */
-
 startHomePage();
 
 
@@ -12,7 +8,6 @@ async function startHomePage() {
 
 
     if (!ready) {
-
         return;
     }
 
@@ -22,7 +17,7 @@ async function startHomePage() {
 
 
 /* =========================================================
-   تحميل الإحصائيات
+   تحميل إحصائيات الرئيسية
 ========================================================= */
 
 async function loadHomeStats() {
@@ -32,13 +27,17 @@ async function loadHomeStats() {
 
             .from("guests")
 
-            .select(
-                "id, status, created_by"
-            );
+            .select(`
+                id,
+                status,
+                created_by,
+                gender
+            `);
 
 
     /*
-        العضو يرى إحصائياته فقط
+        العضو يرى إحصائيات مدعويه فقط.
+        المدير يرى الجميع.
     */
 
     if (
@@ -74,7 +73,6 @@ async function loadHomeStats() {
             "error"
         );
 
-
         return;
     }
 
@@ -83,29 +81,81 @@ async function loadHomeStats() {
         data || [];
 
 
+    /* =========================================
+       الإجمالي
+    ========================================= */
+
     const total =
         guests.length;
 
+
+    /* =========================================
+       تمت دعوتهم
+    ========================================= */
 
     const invited =
         guests.filter(
             function (guest) {
 
-                return guest.status ===
-                    "invited";
+                return (
+                    guest.status ===
+                    "invited"
+                );
             }
         ).length;
 
+
+    /* =========================================
+       لم تتم دعوتهم
+    ========================================= */
 
     const notInvited =
         guests.filter(
             function (guest) {
 
-                return guest.status ===
-                    "not-invited";
+                return (
+                    guest.status ===
+                    "not-invited"
+                );
             }
         ).length;
 
+
+    /* =========================================
+       الرجال
+    ========================================= */
+
+    const males =
+        guests.filter(
+            function (guest) {
+
+                return (
+                    guest.gender ===
+                    "male"
+                );
+            }
+        ).length;
+
+
+    /* =========================================
+       النساء
+    ========================================= */
+
+    const females =
+        guests.filter(
+            function (guest) {
+
+                return (
+                    guest.gender ===
+                    "female"
+                );
+            }
+        ).length;
+
+
+    /* =========================================
+       عرض الأرقام
+    ========================================= */
 
     document
         .getElementById(
@@ -130,6 +180,26 @@ async function loadHomeStats() {
         .textContent =
         notInvited;
 
+
+    document
+        .getElementById(
+            "maleGuests"
+        )
+        .textContent =
+        males;
+
+
+    document
+        .getElementById(
+            "femaleGuests"
+        )
+        .textContent =
+        females;
+
+
+    /* =========================================
+       وصف الإحصائيات
+    ========================================= */
 
     const description =
         document.getElementById(

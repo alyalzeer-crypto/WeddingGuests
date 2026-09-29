@@ -1805,3 +1805,39 @@ body {
     }
 
 }
+/* =========================================
+   إحصائيات الرجال والنساء
+========================================= */
+
+.male-stat .stat-icon {
+    background: #e8f2ff;
+    color: #2464a3;
+}
+
+.female-stat .stat-icon {
+    background: #fff0f6;
+    color: #c43d78;
+}
+
+
+/* ترتيب 5 بطاقات الإحصائيات على الكمبيوتر */
+
+@media (min-width: 750px) {
+
+    .mobile-stats {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+
+/* على الهاتف تبقى كل بطاقة واضحة */
+
+@media (max-width: 749px) {
+
+    .mobile-stats {
+        grid-template-columns: 1fr;
+    }
+
+}
